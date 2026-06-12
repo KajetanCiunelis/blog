@@ -1,0 +1,28 @@
+---
+// Wyszukiwarka Pagefind — indeks powstaje przy `npm run build`,
+// więc działa na zbudowanej stronie (npm run preview / produkcja).
+// W trybie dev pole się nie wyświetla (skrypt zwraca 404).
+interface Props {
+  lang: 'pl' | 'en';
+}
+
+const { lang } = Astro.props;
+const placeholder = lang === 'en' ? 'Search…' : 'Szukaj…';
+---
+
+<div class="search-box" id="search" data-placeholder={placeholder}></div>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', function () {
+    if (typeof PagefindUI === 'undefined') return;
+    var el = document.getElementById('search');
+    new PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      showImages: false,
+      translations: { placeholder: el ? el.getAttribute('data-placeholder') : 'Szukaj…' },
+    });
+  });
+</script>

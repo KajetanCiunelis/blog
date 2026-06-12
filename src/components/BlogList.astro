@@ -1,0 +1,104 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Search from './Search.astro';
+import { readingTime, formatDate, isoDate } from '../utils/helpers';
+
+interface Props {
+  posts: (CollectionEntry<'posts'> | CollectionEntry<'postsEn'>)[];
+  lang: 'pl' | 'en';
+  title: string;
+  description: string;
+}
+
+const { posts, lang, title, description } = Astro.props;
+const basePath = lang === 'en' ? '/en/posts/' : '/posts/';
+const path = lang === 'en' ? '/en/blog/' : '/blog/';
+
+const sorted = posts
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const allCategories = [...new Set(sorted.flatMap((p) => p.data.categories))].sort((a, b) =>
+  a.localeCompare(b, lang === 'en' ? 'en' : 'pl')
+);
+
+const labels =
+  lang === 'en'
+    ? { all: 'All', empty: 'No posts yet.', categories: 'Categories' }
+    : { all: 'Wszystkie', empty: 'Brak postów.', categories: 'Kategorie' };
+---
+
+<Base
+  title={title}
+  description={description}
+  lang={lang}
+  path={path}
+  alternates={{ pl: '/blog/', en: '/en/blog/' }}
+  switchHref={lang === 'en' ? '/blog/' : '/en/blog/'}
+>
+  <h1>{title}</h1>
+
+  <Search lang={lang} />
+
+  {
+    allCategories.length > 0 && (
+      <div class="category-filter" role="group" aria-label={labels.categories}>
+        <button class="category-chip active" data-category="">
+          {labels.all}
+        </button>
+        {allCategories.map((c) => (
+          <button class="category-chip" data-category={c}>
+            {c}
+          </button>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="listing">
+    {sorted.length === 0 && <p>{labels.empty}</p>}
+    {
+      sorted.map((p) => (
+        <a
+          class="listing-item"
+          href={`${basePath}${p.id}/`}
+          data-categories={p.data.categories.join('|')}
+        >
+          <p class="listing-meta">
+            <time datetime={isoDate(p.data.date)}>{formatDate(p.data.date, lang)}</time>
+            <span>{readingTime(p.body)} min</span>
+          </p>
+          <h2>{p.data.title}</h2>
+          <p class="listing-desc">{p.data.description}</p>
+          <p class="listing-meta">
+            {p.data.categories.map((c) => (
+              <span class="category-chip">{c}</span>
+            ))}
+          </p>
+        </a>
+      ))
+    }
+  </div>
+</Base>
+
+<script is:inline>
+  // Filtrowanie postów po kategorii (klient, bez przeładowania)
+  (function () {
+    var chips = document.querySelectorAll('.category-filter .category-chip');
+    var items = document.querySelectorAll('.listing-item');
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) {
+          c.classList.remove('active');
+        });
+        chip.classList.add('active');
+        var cat = chip.getAttribute('data-category');
+        items.forEach(function (item) {
+          var cats = (item.getAttribute('data-categories') || '').split('|');
+          item.style.display = !cat || cats.indexOf(cat) !== -1 ? '' : 'none';
+        });
+      });
+    });
+  })();
+</script>

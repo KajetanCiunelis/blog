@@ -1,0 +1,35 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  lang: 'pl' | 'en';
+}
+
+const { lang } = Astro.props;
+const entry = await getEntry('pages', lang === 'en' ? 'publications-en' : 'publications-pl');
+if (!entry) {
+  throw new Error(`Brak treści strony "Publikacje" (${lang}) w src/content/pages/`);
+}
+const { Content } = await render(entry);
+const path = lang === 'en' ? '/en/publications/' : '/publications/';
+
+const description =
+  lang === 'en'
+    ? 'Research publications, projects, conference presentations, and awards — Kajetan Ciunelis, AWF Warsaw.'
+    : 'Publikacje naukowe, projekty badawcze, konferencje i nagrody — Kajetan Ciunelis, AWF Warszawa.';
+---
+
+<Base
+  title={entry.data.title}
+  description={description}
+  lang={lang}
+  path={path}
+  alternates={{ pl: '/publications/', en: '/en/publications/' }}
+  switchHref={lang === 'en' ? '/publications/' : '/en/publications/'}
+>
+  <div class="no-justify" data-pagefind-body>
+    <h1>{entry.data.title}</h1>
+    <Content />
+  </div>
+</Base>

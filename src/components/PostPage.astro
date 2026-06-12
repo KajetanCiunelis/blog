@@ -1,0 +1,109 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { readingTime, formatDate, isoDate } from '../utils/helpers';
+
+interface Props {
+  entry: CollectionEntry<'posts'> | CollectionEntry<'postsEn'>;
+  lang: 'pl' | 'en';
+  prev?: { slug: string; title: string } | null;
+  next?: { slug: string; title: string } | null;
+}
+
+const { entry, lang, prev = null, next = null } = Astro.props;
+const d = entry.data;
+const basePath = lang === 'en' ? '/en/posts/' : '/posts/';
+const path = `${basePath}${entry.id}/`;
+const minutes = readingTime(entry.body);
+
+const { Content, headings } = await render(entry);
+const toc = (headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 3);
+
+const site = Astro.site ?? new URL('https://kajetan.ciunelis.com');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: d.title,
+  description: d.description,
+  author: { '@type': 'Person', name: 'Kajetan Ciunelis' },
+  datePublished: isoDate(d.date),
+  dateModified: isoDate(d.dateModified ?? d.date),
+  url: new URL(path, site).href,
+  ...(d.image ? { image: new URL(d.image, site).href } : {}),
+};
+
+const tocTitle = lang === 'en' ? 'On this page' : 'Na tej stronie';
+---
+
+<Base
+  title={d.title}
+  description={d.description}
+  lang={lang}
+  path={path}
+  ogType="article"
+  ogImage={d.image}
+  ogImageAlt={d.imageAlt}
+  jsonLd={jsonLd}
+  switchHref={lang === 'en' ? '/blog/' : '/en/blog/'}
+>
+  <article class="post" data-pagefind-body>
+    <header class="post-header">
+      <h1>{d.title}</h1>
+      <p class="post-meta">
+        <time datetime={isoDate(d.date)}>{formatDate(d.date, lang)}</time>
+        &nbsp;·&nbsp; Kajetan Ciunelis &nbsp;·&nbsp; {minutes} min
+      </p>
+      {
+        d.categories.length > 0 && (
+          <ul class="post-categories">
+            {d.categories.map((c) => (
+              <li>
+                <span class="category-chip">{c}</span>{' '}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <div class:list={['post-layout', { 'has-toc': toc.length > 1 }]}>
+      <div class="post-content">
+        <Content />
+      </div>
+      {
+        toc.length > 1 && (
+          <aside class="toc" aria-label={tocTitle}>
+            <div class="toc-inner">
+              <p class="toc-title">{tocTitle}</p>
+              <ul>
+                {toc.map((h) => (
+                  <li class={`toc-depth-${h.depth}`}>
+                    <a href={`#${h.slug}`}>{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        )
+      }
+    </div>
+
+    {
+      (prev || next) && (
+        <nav class="post-nav" aria-label={lang === 'en' ? 'Posts' : 'Posty'}>
+          {prev && (
+            <a class="prev" href={`${basePath}${prev.slug}/`}>
+              ← {prev.title}
+            </a>
+          )}
+          {next && (
+            <a class="next" href={`${basePath}${next.slug}/`}>
+              {next.title} →
+            </a>
+          )}
+        </nav>
+      )
+    }
+  </article>
+</Base>

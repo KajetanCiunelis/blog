@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import BlogList from '../../components/BlogList.astro';
+
+const posts = await getCollection('postsEn');
+---
+
+<BlogList
+  posts={posts}
+  lang="en"
+  title="Blog"
+  description="Blog on physiotherapy, evidence-based medicine and pseudoscience in healthcare."
+/>

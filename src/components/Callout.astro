@@ -1,0 +1,22 @@
+---
+interface Props {
+  type?: 'note' | 'tip' | 'warning' | 'important';
+  title?: string;
+}
+
+const { type = 'note', title } = Astro.props;
+
+const defaultTitles: Record<string, string> = {
+  note: 'Notatka',
+  tip: 'Wskazówka',
+  warning: 'Uwaga',
+  important: 'Ważne',
+};
+
+const heading = title || defaultTitles[type] || defaultTitles.note;
+---
+
+<aside class={`callout callout-${type}`}>
+  <p class="callout-title">{heading}</p>
+  <slot />
+</aside>

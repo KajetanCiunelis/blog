@@ -1,0 +1,748 @@
+/* ============================================================
+   Globalne style — port designu z Quarto (Blog-kc/styles.css)
+   Brutalist: zero gradientów, cieni, zaokrągleń.
+   ============================================================ */
+
+:root {
+  --black: #1a1a1a;
+  --cream: #f0ebe0;
+  --red: #c41e3a;
+  --red-deep: #9b1830;
+  --red-bright: #e74c6b;
+  --muted: #6b6660;
+  --muted-dark: #8a8580;
+
+  --bg: var(--cream);
+  --fg: var(--black);
+  --link: var(--red);
+  --link-hover: var(--red-deep);
+  --border: var(--black);
+  --meta: var(--muted);
+}
+
+html.dark {
+  --bg: var(--black);
+  --fg: var(--cream);
+  --link: var(--red-bright);
+  --link-hover: var(--red);
+  --border: var(--cream);
+  --meta: var(--muted-dark);
+  color-scheme: dark;
+}
+
+/* === Brutalist reset === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-radius: 0 !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 5rem;
+  min-height: 60vh;
+}
+
+main.wide {
+  max-width: 1200px;
+}
+
+/* === Typography === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+p,
+li {
+  text-align: justify;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.no-justify p,
+.no-justify li {
+  text-align: left;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+figcaption {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--meta);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* === Links === */
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: rgba(196, 30, 58, 0.25);
+}
+
+/* === Horizontal rules as red separators === */
+hr {
+  border: none;
+  border-top: 2px solid var(--red);
+  opacity: 1;
+  margin: 2rem 0;
+}
+
+/* === Skip link === */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  background: var(--red);
+  color: var(--cream);
+  padding: 0.5rem 1rem;
+  z-index: 2000;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+}
+
+/* === Navbar — always black, red bottom border === */
+.navbar {
+  background-color: var(--black);
+  border-bottom: 3px solid var(--red);
+  color: var(--cream);
+  position: relative;
+  z-index: 1030;
+}
+
+.navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.navbar .brand {
+  color: var(--cream);
+  font-weight: 400;
+  font-size: 1.1rem;
+  margin-right: auto;
+  white-space: nowrap;
+}
+
+.navbar .brand:hover {
+  color: var(--cream);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.navbar .nav-link {
+  color: var(--cream);
+  font-weight: 400;
+  font-size: 0.95rem;
+  padding: 0.4rem 0;
+}
+
+.navbar .nav-link:hover {
+  color: var(--red);
+}
+
+.navbar .nav-link.active {
+  font-weight: 700;
+}
+
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lang-switch {
+  color: var(--cream);
+  border: 1px solid var(--cream);
+  background: transparent;
+  padding: 0.4rem 0.75rem;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.lang-switch:hover {
+  background-color: var(--red);
+  border-color: var(--red);
+  color: var(--cream);
+}
+
+.theme-toggle {
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  color: var(--red);
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+html.dark .theme-toggle .icon-sun {
+  display: block;
+}
+
+html.dark .theme-toggle .icon-moon {
+  display: none;
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--cream);
+  color: var(--cream);
+  font-size: 1.2rem;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-links {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+}
+
+/* === Footer — black, red top border, 3 columns === */
+.footer {
+  background-color: var(--black);
+  border-top: 3px solid var(--red);
+  color: var(--muted-dark);
+  font-size: 0.85rem;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1 1 33.33%;
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.footer a {
+  color: var(--cream);
+}
+
+.footer a:hover {
+  color: var(--red);
+}
+
+.footer p {
+  margin: 0;
+  text-align: inherit;
+}
+
+@media (max-width: 768px) {
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    text-align: center;
+  }
+}
+
+/* === Blockquotes / wiersze === */
+blockquote,
+.poem {
+  border-left: 4px solid var(--red);
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  font-style: italic;
+  background: none;
+  font-size: 1.1rem;
+}
+
+blockquote p,
+.poem p {
+  text-align: left;
+  color: var(--fg);
+}
+
+@media (max-width: 768px) {
+  blockquote,
+  .poem {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* === Code blocks === */
+pre {
+  border: 1px solid var(--border);
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+code {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+:not(pre) > code {
+  background: rgba(196, 30, 58, 0.08);
+  padding: 0.1em 0.3em;
+  font-size: 0.9em;
+}
+
+html.dark :not(pre) > code {
+  background: rgba(231, 76, 107, 0.15);
+}
+
+/* === Tables === */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+th {
+  background: rgba(196, 30, 58, 0.08);
+}
+
+/* === Listing (blog) === */
+.listing-item {
+  display: block;
+  border: 1px solid var(--border);
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.15s ease;
+  color: var(--fg);
+}
+
+.listing-item:hover {
+  border-color: var(--red);
+  color: var(--fg);
+}
+
+.listing-item h2 {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 1.3rem;
+  text-transform: none;
+}
+
+.listing-meta {
+  color: var(--meta);
+  font-size: 0.85rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.listing-desc {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+/* === Categories / tags === */
+.category-chip {
+  display: inline-block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.5rem;
+  margin: 0 0.35rem 0.35rem 0;
+  color: var(--fg);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.category-chip:hover,
+.category-chip.active {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.listing-item .category-chip {
+  cursor: default;
+  font-size: 0.7rem;
+}
+
+/* === Post === */
+.post-header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.post-meta {
+  color: var(--meta);
+  font-size: 0.9rem;
+  text-align: left;
+  margin: 0 0 0.5rem;
+}
+
+.post-categories {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.post-categories li {
+  display: inline;
+}
+
+/* Dark mode: odwracaj kolory wykresów/diagramów (SVG/PNG na przezroczystym tle) */
+html.dark .post-content img[src$='.svg'],
+html.dark .post-content img[src$='.png'] {
+  filter: invert(0.85) hue-rotate(180deg);
+}
+
+.post-content h2,
+.post-content h3 {
+  margin-top: 2.5rem;
+  scroll-margin-top: 1rem;
+}
+
+/* === TOC === */
+.post-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+}
+
+@media (min-width: 1100px) {
+  .post-layout.has-toc {
+    grid-template-columns: minmax(0, 1fr) 220px;
+  }
+}
+
+.toc {
+  display: none;
+  font-size: 0.85rem;
+}
+
+@media (min-width: 1100px) {
+  .toc {
+    display: block;
+  }
+}
+
+.toc-inner {
+  position: sticky;
+  top: 1.5rem;
+  border-left: 2px solid var(--red);
+  padding-left: 1rem;
+}
+
+.toc-title {
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
+}
+
+.toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc li {
+  text-align: left;
+  margin-bottom: 0.35rem;
+  line-height: 1.4;
+}
+
+.toc li.toc-depth-3 {
+  padding-left: 0.85rem;
+}
+
+.toc a {
+  color: var(--fg);
+}
+
+.toc a:hover {
+  color: var(--red);
+}
+
+/* === Prev / next === */
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  border-top: 2px solid var(--red);
+  padding-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.post-nav a {
+  max-width: 45%;
+}
+
+.post-nav .next {
+  margin-left: auto;
+  text-align: right;
+}
+
+/* === Callout === */
+.callout {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--red);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.callout-title {
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
+  color: var(--red);
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* === About page hero === */
+.about-hero {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.about-image-col {
+  flex: 0 0 auto;
+  width: 34em;
+  margin-top: -120px;
+  padding-right: 2rem;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  z-index: 1031;
+  transform: rotate(10deg);
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.about-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.about-svg-dark {
+  display: none;
+}
+
+html.dark .about-svg-light {
+  display: none;
+}
+
+html.dark .about-svg-dark {
+  display: block;
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+
+.about-text-col {
+  flex: 1 1 auto;
+  padding-top: 2rem;
+  max-width: 60ch;
+}
+
+.about-text-col p {
+  text-align: left;
+  line-height: 1.7;
+}
+
+.about-text-col h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.edu-entry {
+  margin-bottom: 1.5rem;
+}
+
+.edu-entry strong {
+  display: block;
+}
+
+.edu-meta {
+  font-size: 0.9rem;
+  color: var(--meta);
+}
+
+@media (max-width: 768px) {
+  p,
+  li {
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+
+  .about-hero {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-image-col {
+    width: 60%;
+    max-width: 16em;
+    margin: 0 auto 1.5rem;
+    padding-right: 0;
+    transform: rotate(0deg);
+    position: relative;
+  }
+
+  .about-text-col {
+    padding-top: 0;
+  }
+}
+
+/* === Poetry === */
+.poem-toc {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.poem-toc li {
+  text-align: left;
+}
+
+/* === Pagefind search === */
+.search-box {
+  margin: 1rem 0 1.5rem;
+}
+
+.search-box .pagefind-ui__search-input,
+.search-box .pagefind-ui__search-clear {
+  border-radius: 0 !important;
+}
+
+.search-box {
+  --pagefind-ui-primary: var(--red);
+  --pagefind-ui-text: var(--fg);
+  --pagefind-ui-background: var(--bg);
+  --pagefind-ui-border: var(--border);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-font: inherit;
+}
+
+/* === CV page === */
+.cv-embed {
+  width: 100%;
+  height: 80vh;
+  border: 1px solid var(--border);
+}

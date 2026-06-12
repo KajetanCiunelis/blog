@@ -1,0 +1,70 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  lang: 'pl' | 'en';
+  switchHref?: string;
+}
+
+const { lang, switchHref } = Astro.props;
+
+const items =
+  lang === 'pl'
+    ? [
+        { href: '/', text: 'O mnie' },
+        { href: '/blog/', text: 'Blog' },
+        { href: '/publications/', text: 'Publikacje' },
+        { href: '/poetry/', text: 'Poezja' },
+      ]
+    : [
+        { href: '/en/', text: 'About' },
+        { href: '/en/blog/', text: 'Blog' },
+        { href: '/en/publications/', text: 'Publications' },
+        { href: '/en/poetry/', text: 'Poetry' },
+      ];
+
+const current = Astro.url.pathname.replace(/\/?$/, '/');
+const isActive = (href: string) =>
+  href === '/' || href === '/en/' ? current === href : current.startsWith(href);
+
+const switchTarget = switchHref ?? (lang === 'pl' ? '/en/' : '/');
+const switchLabel = lang === 'pl' ? 'EN' : 'PL';
+---
+
+<header class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href={lang === 'pl' ? '/' : '/en/'}>Kajetan Ciunelis</a>
+    <div class="nav-tools">
+      <a class="lang-switch" href={switchTarget}>{switchLabel}</a>
+      <ThemeToggle />
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+        ☰
+      </button>
+    </div>
+    <nav class="nav-links" id="nav-links" aria-label={lang === 'en' ? 'Main navigation' : 'Nawigacja główna'}>
+      {
+        items.map((i) => (
+          <a
+            class:list={['nav-link', { active: isActive(i.href) }]}
+            href={i.href}
+            aria-current={isActive(i.href) ? 'page' : undefined}
+          >
+            {i.text}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    var btn = document.querySelector('.nav-toggle');
+    var links = document.getElementById('nav-links');
+    if (!btn || !links) return;
+    btn.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+</script>

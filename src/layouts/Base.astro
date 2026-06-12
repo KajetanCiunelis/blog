@@ -1,0 +1,106 @@
+---
+import '../styles/global.css';
+import '@fontsource-variable/nunito';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: 'pl' | 'en';
+  /** Ścieżka kanoniczna, np. '/posts/slug/'. Domyślnie bieżący URL. */
+  path?: string;
+  /** Alternatywy językowe TEJ strony (hreflang). */
+  alternates?: { pl?: string; en?: string };
+  /** Cel przełącznika języka w navbarze. */
+  switchHref?: string;
+  noindex?: boolean;
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: 'website' | 'article';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** true = tytuł bez dopisku "– Kajetan Ciunelis" */
+  fullTitle?: boolean;
+  /** true = szeroki main (strona główna) */
+  wide?: boolean;
+}
+
+const {
+  title,
+  description,
+  lang = 'pl',
+  path = Astro.url.pathname,
+  alternates,
+  switchHref,
+  noindex = false,
+  ogImage,
+  ogImageAlt,
+  ogType = 'website',
+  jsonLd,
+  fullTitle = false,
+  wide = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://kajetan.ciunelis.com');
+// Forma kanoniczna: katalogi z ukośnikiem na końcu, bez index.html
+const normalizedPath =
+  path.endsWith('/') || path.split('/').pop()?.includes('.') ? path : path + '/';
+const canonical = new URL(normalizedPath, site).href;
+const pageTitle = fullTitle ? title : `${title} – Kajetan Ciunelis`;
+const absUrl = (p: string) => new URL(p, site).href;
+---
+
+<!doctype html>
+<html lang={lang === 'en' ? 'en-GB' : 'pl'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Kajetan Ciunelis" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    {alternates?.pl && <link rel="alternate" hreflang="pl" href={absUrl(alternates.pl)} />}
+    {alternates?.en && <link rel="alternate" hreflang="en" href={absUrl(alternates.en)} />}
+    {alternates?.pl && <link rel="alternate" hreflang="x-default" href={absUrl(alternates.pl)} />}
+    <link rel="icon" href="/favicon-light.ico" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="/favicon-dark.ico" media="(prefers-color-scheme: dark)" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Kajetan Ciunelis — Blog"
+      href={lang === 'en' ? '/en/blog.xml' : '/blog.xml'}
+    />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Kajetan Ciunelis" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_GB' : 'pl_PL'} />
+    {ogImage && <meta property="og:image" content={absUrl(ogImage)} />}
+    {ogImage && ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="generator" content={Astro.generator} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <script is:inline>
+      // Dark mode bez mignięcia: localStorage > preferencja systemowa
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (!t) {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          if (t === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{lang === 'en' ? 'Skip to content' : 'Przejdź do treści'}</a>
+    <Navbar lang={lang} switchHref={switchHref} />
+    <main id="main" class:list={[{ wide }]}>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

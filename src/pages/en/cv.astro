@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const pdf = '/files/CV_Kajetan_Ciunelis.pdf';
+---
+
+<Base
+  title="Curriculum Vitae"
+  description="CV — Kajetan Ciunelis, physiotherapist, PhD student at AWF Warsaw."
+  lang="en"
+  path="/en/cv/"
+  noindex
+  switchHref="/"
+>
+  <h1>Curriculum Vitae</h1>
+  <p class="no-justify">
+    <a href={pdf} download>Download CV (PDF)</a>
+  </p>
+  <object class="cv-embed" data={pdf} type="application/pdf" aria-label="CV — Kajetan Ciunelis (PDF)">
+    <p>
+      Your browser does not support PDF embedding.
+      <a href={pdf} download>Download the CV here</a>.
+    </p>
+  </object>
+</Base>

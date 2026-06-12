@@ -1,0 +1,76 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  lang: 'pl' | 'en';
+}
+
+const { lang } = Astro.props;
+const entry = await getEntry('pages', lang === 'en' ? 'about-en' : 'about-pl');
+if (!entry) {
+  throw new Error(`Brak treści strony "O mnie" (${lang}) w src/content/pages/`);
+}
+const { Content } = await render(entry);
+const d = entry.data;
+const path = lang === 'en' ? '/en/' : '/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Kajetan Ciunelis',
+  url: 'https://kajetan.ciunelis.com',
+  jobTitle: 'Physiotherapist, PhD Student',
+  affiliation: { '@type': 'Organization', name: 'AWF Warsaw' },
+  sameAs: [
+    'https://github.com/KajetanCiunelis',
+    'https://www.instagram.com/kajetan.ciunelis/',
+    'https://orcid.org/0009-0007-4168-9122',
+  ],
+};
+
+const description =
+  lang === 'en'
+    ? 'Kajetan Ciunelis — physiotherapist, PhD student at AWF Warsaw. Evidence-based physiotherapy blog, publications, poetry.'
+    : 'Kajetan Ciunelis — fizjoterapeuta, doktorant AWF Warszawa. Blog o fizjoterapii opartej na dowodach, publikacje, poezja.';
+
+const eduHeading = lang === 'en' ? 'Education' : 'Edukacja';
+---
+
+<Base
+  title="Kajetan Ciunelis"
+  description={description}
+  lang={lang}
+  path={path}
+  alternates={{ pl: '/', en: '/en/' }}
+  switchHref={lang === 'en' ? '/' : '/en/'}
+  jsonLd={jsonLd}
+  fullTitle
+  wide
+>
+  <div class="about-hero">
+    <div class="about-image-col">
+      <img class="about-svg about-svg-light" src="/images/dark-mode.svg" alt="" />
+      <img class="about-svg about-svg-dark" src="/images/dark-mode.svg" alt="" />
+    </div>
+    <div class="about-text-col">
+      {d.intro && <p>{d.intro}</p>}
+
+      {
+        d.education && d.education.length > 0 && (
+          <>
+            <h2>{eduHeading}</h2>
+            {d.education.map((e) => (
+              <div class="edu-entry">
+                <strong>{e.degree}</strong>
+                <span class="edu-meta">{e.meta}</span>
+              </div>
+            ))}
+          </>
+        )
+      }
+
+      <Content />
+    </div>
+  </div>
+</Base>

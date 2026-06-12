@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import BlogList from '../components/BlogList.astro';
+
+const posts = await getCollection('posts');
+---
+
+<BlogList
+  posts={posts}
+  lang="pl"
+  title="Blog"
+  description="Blog o fizjoterapii, medycynie opartej na dowodach i pseudonauce w ochronie zdrowia."
+/>
