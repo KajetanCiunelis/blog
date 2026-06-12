@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Kajetan Ciunelis — Blog (EN)',
     description: 'Blog on physiotherapy, evidence-based medicine and pseudoscience in healthcare.',
-    site: context.site!,
+    site: new URL('/en/', context.site),
     items: posts.map((p) => ({
       title: p.data.title,
       description: p.data.description,

@@ -23,6 +23,8 @@ interface Props {
   fullTitle?: boolean;
   /** true = szeroki main (strona główna) */
   wide?: boolean;
+  /** true = bez canonical/og:url (strona 404) */
+  noCanonical?: boolean;
 }
 
 const {
@@ -39,6 +41,7 @@ const {
   jsonLd,
   fullTitle = false,
   wide = false,
+  noCanonical = false,
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://kajetan.ciunelis.com');
@@ -59,7 +62,7 @@ const absUrl = (p: string) => new URL(p, site).href;
     <meta name="description" content={description} />
     <meta name="author" content="Kajetan Ciunelis" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="canonical" href={canonical} />
+    {!noCanonical && <link rel="canonical" href={canonical} />}
     {alternates?.pl && <link rel="alternate" hreflang="pl" href={absUrl(alternates.pl)} />}
     {alternates?.en && <link rel="alternate" hreflang="en" href={absUrl(alternates.en)} />}
     {alternates?.pl && <link rel="alternate" hreflang="x-default" href={absUrl(alternates.pl)} />}
@@ -74,7 +77,7 @@ const absUrl = (p: string) => new URL(p, site).href;
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!noCanonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content="Kajetan Ciunelis" />
     <meta property="og:locale" content={lang === 'en' ? 'en_GB' : 'pl_PL'} />
     {ogImage && <meta property="og:image" content={absUrl(ogImage)} />}

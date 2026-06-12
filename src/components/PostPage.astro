@@ -30,6 +30,7 @@ const jsonLd = {
   datePublished: isoDate(d.date),
   dateModified: isoDate(d.dateModified ?? d.date),
   url: new URL(path, site).href,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': new URL(path, site).href },
   ...(d.image ? { image: new URL(d.image, site).href } : {}),
 };
 
