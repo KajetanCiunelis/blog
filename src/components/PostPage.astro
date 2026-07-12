@@ -47,8 +47,9 @@ const tocTitle = lang === 'en' ? 'On this page' : 'Na tej stronie';
   ogImageAlt={d.imageAlt}
   jsonLd={jsonLd}
   switchHref={lang === 'en' ? '/blog/' : '/en/blog/'}
+  wide
 >
-  <article class="post" data-pagefind-body>
+  <article class:list={['post', { 'with-toc': toc.length > 1 }]} data-pagefind-body>
     <header class="post-header">
       <h1>{d.title}</h1>
       <p class="post-meta">

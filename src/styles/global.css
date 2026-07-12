@@ -521,6 +521,14 @@ html.dark .post-content img[src$='.png'] {
   scroll-margin-top: 1rem;
 }
 
+/* === Szerokość posta ===
+   Bez TOC: wygodna kolumna czytelnicza. Z TOC (desktop): szerszy
+   kontener, żeby spis treści nie zwężał tekstu. */
+.post {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
 /* === TOC === */
 .post-layout {
   display: grid;
@@ -529,8 +537,13 @@ html.dark .post-content img[src$='.png'] {
 }
 
 @media (min-width: 1100px) {
+  .post.with-toc {
+    max-width: 1060px;
+  }
+
   .post-layout.has-toc {
     grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 3rem;
   }
 }
 
