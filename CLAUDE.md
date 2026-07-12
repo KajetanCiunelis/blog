@@ -6,8 +6,9 @@ Wskazówki dla Claude Code przy pracy z tym repozytorium.
 
 Dwujęzyczny blog osobisty/akademicki (PL + EN) Kajetana Ciunelisa — fizjoterapeuty i doktoranta AWF Warszawa. Następca strony w Quarto (`../Blog-kc`). Statyczny site w **Astro** z lokalnym panelem admina **Keystatic**.
 
-- Docelowy URL: https://kajetan.ciunelis.com/ (PL = root, EN = `/en/`)
-- Na razie tylko lokalnie — migracja hostingu nastąpi po dopieszczeniu strony.
+- URL produkcyjny: https://kajetan.ciunelis.com/ (PL = root, EN = `/en/`)
+- Hosting: GitHub Pages, repo `KajetanCiunelis/blog`. **Deploy = push do `master`** — GitHub Actions (`.github/workflows/deploy.yml`) buduje i wdraża automatycznie. NIE commituj `dist/`.
+- Stare repo `KajetanCiunelis/Blog-kc` (Quarto) = archiwum, Pages wyłączone — nie ruszać.
 
 ## Komendy
 

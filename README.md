@@ -49,6 +49,10 @@ Alternatywnie: posty można pisać ręcznie jako pliki `src/content/posts/<slug>
 
 ⚠️ **Nie zmieniaj sluga opublikowanego posta** — to zmiana URL-a i utrata pozycji w Google.
 
-## Hosting (na później)
+## Hosting i publikacja
 
-Strona to czyste pliki statyczne (`dist/`) — wejdzie na darmowy GitHub Pages (limit 1 GB, obecna strona waży ~6 MB) albo Cloudflare Pages. Migracja domeny po dopieszczeniu strony.
+Strona żyje na **https://kajetan.ciunelis.com** (GitHub Pages, repo `KajetanCiunelis/blog`, za darmo).
+
+**Publikacja = `git push`.** GitHub Actions sam buduje i wdraża stronę (~1 min po pushu). Nie commituj `dist/` — buduje się w chmurze. Status builda: `gh run list` albo zakładka Actions na GitHubie.
+
+Stara strona Quarto: repo `KajetanCiunelis/Blog-kc` zostało jako archiwum (Pages wyłączone).
