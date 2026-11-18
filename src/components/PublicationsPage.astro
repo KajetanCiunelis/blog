@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { WORK_MODE } from '../config';
 
 interface Props {
   lang: 'pl' | 'en';
@@ -12,6 +13,11 @@ if (!entry) {
   throw new Error(`Brak treści strony "Publikacje" (${lang}) w src/content/pages/`);
 }
 const { Content } = await render(entry);
+// Wersja do pracy nie ma strony "O mnie", więc edukacja (tylko AWF) trafia tutaj.
+const about = WORK_MODE ? await getEntry('pages', lang === 'en' ? 'about-en' : 'about-pl') : undefined;
+const education = (about?.data.education ?? []).filter((e) => e.meta.includes('AWF'));
+const eduHeading = lang === 'en' ? 'Education' : 'Edukacja';
+
 const path = lang === 'en' ? '/en/publications/' : '/publications/';
 
 const description =
@@ -30,6 +36,19 @@ const description =
 >
   <div class="no-justify" data-pagefind-body>
     <h1>{entry.data.title}</h1>
+    {
+      education.length > 0 && (
+        <>
+          <h2>{eduHeading}</h2>
+          {education.map((e) => (
+            <div class="edu-entry">
+              <strong>{e.degree}</strong>
+              <span class="edu-meta">{e.meta}</span>
+            </div>
+          ))}
+        </>
+      )
+    }
     <Content />
   </div>
 </Base>
