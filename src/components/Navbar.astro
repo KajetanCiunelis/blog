@@ -26,20 +26,16 @@ const allItems =
         { href: 'https://tnr.ciunelis.com/', text: 'TNR' },
       ];
 
-// Wersja do pracy: jedna strona, więc nawigacja prowadzi do jej sekcji.
-// Kotwice to identyfikatory nagłówków H2 z publications-pl/en.mdoc (zmiana nagłówka = zmiana kotwicy).
+// Wersja do pracy: strona startowa (o mnie) jest pod nazwiskiem w belce,
+// w menu zostają Publikacje i link do narzędzi TNR.
 const workItems =
   lang === 'pl'
     ? [
-        { href: '/#artykuły-w-czasopismach', text: 'Publikacje' },
-        { href: '/#projekty-badawcze', text: 'Projekty' },
-        { href: '/#konferencje', text: 'Konferencje' },
+        { href: '/publications/', text: 'Publikacje' },
         { href: 'https://tnr.ciunelis.com/', text: 'Dydaktyka ↗' },
       ]
     : [
-        { href: '/en/#journal-articles', text: 'Publications' },
-        { href: '/en/#research-projects', text: 'Projects' },
-        { href: '/en/#conference-presentations', text: 'Conferences' },
+        { href: '/en/publications/', text: 'Publications' },
         { href: 'https://tnr.ciunelis.com/', text: 'Teaching ↗' },
       ];
 

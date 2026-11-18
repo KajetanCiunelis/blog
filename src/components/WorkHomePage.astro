@@ -1,0 +1,64 @@
+---
+// Strona startowa wersji do pracy: krótkie "o mnie" (zdanie, portret, edukacja AWF).
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  lang: 'pl' | 'en';
+}
+
+const { lang } = Astro.props;
+const en = lang === 'en';
+const about = await getEntry('pages', en ? 'about-en' : 'about-pl');
+const education = (about?.data.education ?? []).filter((e) => e.meta.includes('AWF'));
+const eduHeading = en ? 'Education' : 'Edukacja';
+const intro = en
+  ? 'Physiotherapist and PhD student at AWF Warsaw. I study trunk function and the biomechanics of wheelchair athletes within the Synergy project (GIH Stockholm).'
+  : 'Fizjoterapeuta i doktorant AWF Warszawa. Badam funkcje tułowia i biomechanikę sportowców na wózkach w ramach projektu Synergy (GIH Stockholm).';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Kajetan Ciunelis',
+  url: 'https://kajetan.ciunelis.com/',
+  jobTitle: 'Physiotherapist, PhD Student',
+  affiliation: { '@type': 'Organization', name: 'AWF Warsaw' },
+  sameAs: ['https://orcid.org/0009-0007-4168-9122'],
+};
+---
+
+<Base
+  title="Kajetan Ciunelis"
+  description={intro}
+  lang={lang}
+  path={en ? '/en/' : '/'}
+  alternates={{ pl: '/', en: '/en/' }}
+  switchHref={en ? '/' : '/en/'}
+  jsonLd={jsonLd}
+  fullTitle
+>
+  <div class="no-justify">
+    <h1>Kajetan Ciunelis</h1>
+    <div class="pub-intro">
+      <img
+        class="pub-portrait"
+        src="/images/portret.webp"
+        alt={en ? 'Portrait of Kajetan Ciunelis' : 'Portret Kajetana Ciunelisa'}
+        width="320"
+        height="320"
+      />
+      <div>
+        <p class="pub-lead">{intro}</p>
+        <h2>{eduHeading}</h2>
+        {
+          education.map((e) => (
+            <div class="edu-entry">
+              <strong>{e.degree}</strong>
+              <span class="edu-meta">{e.meta}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</Base>

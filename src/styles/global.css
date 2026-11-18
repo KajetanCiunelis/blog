@@ -710,12 +710,16 @@ html.dark .about-svg-dark {
   color: var(--meta);
 }
 
-/* === Publikacje w wersji do pracy: portret + edukacja === */
+/* === Strona startowa wersji do pracy: portret + zdanie o mnie + edukacja === */
+.pub-content > h2:first-child {
+  margin-top: 0;
+}
+
 .pub-intro {
   display: flex;
   align-items: center;
   gap: 2.5rem;
-  margin: 1rem 0 2.5rem;
+  margin: 1.5rem 0 2.5rem;
 }
 
 .pub-portrait {
