@@ -1,5 +1,7 @@
 ---
 import AboutPage from '../components/AboutPage.astro';
+import PublicationsPage from '../components/PublicationsPage.astro';
+import { WORK_MODE } from '../config';
 ---
 
-<AboutPage lang="pl" />
+{WORK_MODE ? <PublicationsPage lang="pl" /> : <AboutPage lang="pl" />}
