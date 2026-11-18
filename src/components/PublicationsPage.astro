@@ -38,15 +38,24 @@ const description =
     <h1>{entry.data.title}</h1>
     {
       education.length > 0 && (
-        <>
-          <h2>{eduHeading}</h2>
-          {education.map((e) => (
-            <div class="edu-entry">
-              <strong>{e.degree}</strong>
-              <span class="edu-meta">{e.meta}</span>
-            </div>
-          ))}
-        </>
+        <div class="pub-intro">
+          <img
+            class="pub-portrait"
+            src="/images/portret-zielony.webp"
+            alt={lang === 'en' ? 'Portrait of Kajetan Ciunelis' : 'Portret Kajetana Ciunelisa'}
+            width="280"
+            height="280"
+          />
+          <div>
+            <h2>{eduHeading}</h2>
+            {education.map((e) => (
+              <div class="edu-entry">
+                <strong>{e.degree}</strong>
+                <span class="edu-meta">{e.meta}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       )
     }
     <Content />

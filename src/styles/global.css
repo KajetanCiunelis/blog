@@ -710,6 +710,42 @@ html.dark .about-svg-dark {
   color: var(--meta);
 }
 
+/* === Publikacje w wersji do pracy: portret + edukacja === */
+.pub-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.pub-portrait {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 200px;
+  display: block;
+  border: 1px solid var(--border);
+}
+
+.pub-intro h2 {
+  margin-top: 0;
+}
+
+.pub-intro .edu-entry:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 560px) {
+  .pub-intro {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .pub-portrait {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 @media (max-width: 768px) {
   p,
   li {
