@@ -16,18 +16,19 @@ const allItems =
         { href: '/blog/', text: 'Blog' },
         { href: '/publications/', text: 'Publikacje' },
         { href: '/poetry/', text: 'Poezja' },
-        { href: '/tnr/', text: 'TNR' },
+        { href: 'https://tnr.ciunelis.com/', text: 'TNR' },
       ]
     : [
         { href: '/en/', text: 'About' },
         { href: '/en/blog/', text: 'Blog' },
         { href: '/en/publications/', text: 'Publications' },
         { href: '/en/poetry/', text: 'Poetry' },
-        { href: '/en/tnr/', text: 'TNR' },
+        { href: 'https://tnr.ciunelis.com/', text: 'TNR' },
       ];
 
+// TNR to link zewnętrzny do narzędzi na tnr.ciunelis.com
 const items = WORK_MODE
-  ? allItems.filter((i) => /\/(publications|tnr)\/$/.test(i.href))
+  ? allItems.filter((i) => i.text === 'TNR' || i.href.endsWith('/publications/'))
   : allItems;
 const home = lang === 'pl' ? '/' : '/en/';
 const brandHref = WORK_MODE ? `${home}publications/` : home;
