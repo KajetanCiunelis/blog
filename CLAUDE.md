@@ -13,7 +13,8 @@ Dwujęzyczny blog osobisty/akademicki (PL + EN) Kajetana Ciunelisa — fizjotera
 ## Komendy
 
 - `npm run dev` — serwer deweloperski + **panel admina pod `/keystatic`** (http://localhost:4321/keystatic)
-- `npm run build` — statyczny build do `dist/` + indeks wyszukiwarki Pagefind
+- `npm run build` — statyczny build do `dist/` + indeks wyszukiwarki Pagefind (pełna strona)
+- `npm run build:work` — wersja do pracy (`PUBLIC_WORK_MODE=true`): tylko Publikacje i TNR, bez O mnie i stopki. **Tę wersję wdraża teraz `deploy.yml`**
 - `npm run preview` — podgląd zbudowanej strony (z działającą wyszukiwarką)
 
 Panel Keystatic działa TYLKO w `npm run dev` (storage: local — edytuje pliki w repo). Build produkcyjny jest w 100% statyczny, bez Reacta w przeglądarce.

@@ -24,7 +24,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
+      # Wersja do pracy (tylko Publikacje i TNR). Pełna strona: zmień na "npm run build".
+      - run: npm run build:work
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
