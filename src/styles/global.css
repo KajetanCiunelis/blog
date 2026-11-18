@@ -6,16 +6,16 @@
 :root {
   --black: #1a1a1a;
   --cream: #f0ebe0;
-  --red: #c41e3a;
-  --red-deep: #9b1830;
-  --red-bright: #e74c6b;
+  --green: #155e3f;
+  --green-deep: #0f4630;
+  --green-bright: #4caf7d;
   --muted: #6b6660;
   --muted-dark: #8a8580;
 
   --bg: var(--cream);
   --fg: var(--black);
-  --link: var(--red);
-  --link-hover: var(--red-deep);
+  --link: var(--green);
+  --link-hover: var(--green-deep);
   --border: var(--black);
   --meta: var(--muted);
 }
@@ -23,8 +23,8 @@
 html.dark {
   --bg: var(--black);
   --fg: var(--cream);
-  --link: var(--red-bright);
-  --link-hover: var(--red);
+  --link: var(--green-bright);
+  --link-hover: var(--green);
   --border: var(--cream);
   --meta: var(--muted-dark);
   color-scheme: dark;
@@ -118,18 +118,18 @@ a:hover {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--red);
+  outline: 2px solid var(--green);
   outline-offset: 2px;
 }
 
 ::selection {
-  background-color: rgba(196, 30, 58, 0.25);
+  background-color: rgba(21, 94, 63, 0.25);
 }
 
-/* === Horizontal rules as red separators === */
+/* === Horizontal rules as green separators === */
 hr {
   border: none;
-  border-top: 2px solid var(--red);
+  border-top: 2px solid var(--green);
   opacity: 1;
   margin: 2rem 0;
 }
@@ -151,7 +151,7 @@ hr {
 .skip-link {
   position: absolute;
   left: -9999px;
-  background: var(--red);
+  background: var(--green);
   color: var(--cream);
   padding: 0.5rem 1rem;
   z-index: 2000;
@@ -162,10 +162,10 @@ hr {
   top: 0;
 }
 
-/* === Navbar — always black, red bottom border === */
+/* === Navbar — always black, green bottom border === */
 .navbar {
   background-color: var(--black);
-  border-bottom: 3px solid var(--red);
+  border-bottom: 3px solid var(--green);
   color: var(--cream);
   position: relative;
   z-index: 1030;
@@ -207,7 +207,7 @@ hr {
 }
 
 .navbar .nav-link:hover {
-  color: var(--red);
+  color: var(--green);
 }
 
 .navbar .nav-link.active {
@@ -235,8 +235,8 @@ hr {
 }
 
 .lang-switch:hover {
-  background-color: var(--red);
-  border-color: var(--red);
+  background-color: var(--green);
+  border-color: var(--green);
   color: var(--cream);
 }
 
@@ -254,7 +254,7 @@ hr {
 }
 
 .theme-toggle:hover {
-  color: var(--red);
+  color: var(--green);
 }
 
 .theme-toggle .icon-sun {
@@ -302,10 +302,10 @@ html.dark .theme-toggle .icon-moon {
   }
 }
 
-/* === Footer — black, red top border, 3 columns === */
+/* === Footer — black, green top border, 3 columns === */
 .footer {
   background-color: var(--black);
-  border-top: 3px solid var(--red);
+  border-top: 3px solid var(--green);
   color: var(--muted-dark);
   font-size: 0.85rem;
 }
@@ -338,7 +338,7 @@ html.dark .theme-toggle .icon-moon {
 }
 
 .footer a:hover {
-  color: var(--red);
+  color: var(--green);
 }
 
 .footer p {
@@ -362,7 +362,7 @@ html.dark .theme-toggle .icon-moon {
 /* === Blockquotes / wiersze === */
 blockquote,
 .poem {
-  border-left: 4px solid var(--red);
+  border-left: 4px solid var(--green);
   padding: 1rem 1.5rem;
   margin: 1rem 0;
   font-style: italic;
@@ -397,13 +397,13 @@ code {
 }
 
 :not(pre) > code {
-  background: rgba(196, 30, 58, 0.08);
+  background: rgba(21, 94, 63, 0.08);
   padding: 0.1em 0.3em;
   font-size: 0.9em;
 }
 
 html.dark :not(pre) > code {
-  background: rgba(231, 76, 107, 0.15);
+  background: rgba(76, 175, 125, 0.15);
 }
 
 /* === Tables === */
@@ -422,7 +422,7 @@ td {
 }
 
 th {
-  background: rgba(196, 30, 58, 0.08);
+  background: rgba(21, 94, 63, 0.08);
 }
 
 /* === Listing (blog) === */
@@ -436,7 +436,7 @@ th {
 }
 
 .listing-item:hover {
-  border-color: var(--red);
+  border-color: var(--green);
   color: var(--fg);
 }
 
@@ -478,8 +478,8 @@ th {
 
 .category-chip:hover,
 .category-chip.active {
-  border-color: var(--red);
-  color: var(--red);
+  border-color: var(--green);
+  color: var(--green);
 }
 
 .listing-item .category-chip {
@@ -561,7 +561,7 @@ html.dark .post-content img[src$='.png'] {
 .toc-inner {
   position: sticky;
   top: 1.5rem;
-  border-left: 2px solid var(--red);
+  border-left: 2px solid var(--green);
   padding-left: 1rem;
 }
 
@@ -594,7 +594,7 @@ html.dark .post-content img[src$='.png'] {
 }
 
 .toc a:hover {
-  color: var(--red);
+  color: var(--green);
 }
 
 /* === Prev / next === */
@@ -603,7 +603,7 @@ html.dark .post-content img[src$='.png'] {
   justify-content: space-between;
   gap: 1rem;
   margin-top: 3rem;
-  border-top: 2px solid var(--red);
+  border-top: 2px solid var(--green);
   padding-top: 1rem;
   font-size: 0.9rem;
 }
@@ -620,7 +620,7 @@ html.dark .post-content img[src$='.png'] {
 /* === Callout === */
 .callout {
   border: 1px solid var(--border);
-  border-left: 4px solid var(--red);
+  border-left: 4px solid var(--green);
   padding: 1rem 1.25rem;
   margin: 1.5rem 0;
 }
@@ -631,7 +631,7 @@ html.dark .post-content img[src$='.png'] {
   font-size: 0.85rem;
   letter-spacing: 0.05em;
   margin: 0 0 0.5rem;
-  color: var(--red);
+  color: var(--green);
 }
 
 .callout p:last-child {
@@ -758,7 +758,7 @@ html.dark .about-svg-dark {
 }
 
 .search-box {
-  --pagefind-ui-primary: var(--red);
+  --pagefind-ui-primary: var(--green);
   --pagefind-ui-text: var(--fg);
   --pagefind-ui-background: var(--bg);
   --pagefind-ui-border: var(--border);

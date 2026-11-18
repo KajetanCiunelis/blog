@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "cross-env KEYSTATIC=true astro dev",
     "build": "astro build && pagefind --site dist",
+    "build:work": "cross-env PUBLIC_WORK_MODE=true npm run build",
     "preview": "astro preview"
   },
   "dependencies": {

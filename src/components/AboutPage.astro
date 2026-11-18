@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { WORK_MODE } from '../config';
 
 interface Props {
   lang: 'pl' | 'en';
@@ -50,10 +51,14 @@ const eduHeading = lang === 'en' ? 'Education' : 'Edukacja';
 >
   <h1 class="sr-only">Kajetan Ciunelis</h1>
   <div class="about-hero">
-    <div class="about-image-col">
-      <img class="about-svg about-svg-light" src="/images/dark-mode.svg" alt="" />
-      <img class="about-svg about-svg-dark" src="/images/dark-mode.svg" alt="" />
-    </div>
+    {
+      !WORK_MODE && (
+        <div class="about-image-col">
+          <img class="about-svg about-svg-light" src="/images/dark-mode.svg" alt="" />
+          <img class="about-svg about-svg-dark" src="/images/dark-mode.svg" alt="" />
+        </div>
+      )
+    }
     <div class="about-text-col">
       {d.intro && <p>{d.intro}</p>}
 

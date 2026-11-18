@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import { WORK_MODE } from '../config';
 
 interface Props {
   lang: 'pl' | 'en';
@@ -8,7 +9,7 @@ interface Props {
 
 const { lang, switchHref } = Astro.props;
 
-const items =
+const allItems =
   lang === 'pl'
     ? [
         { href: '/', text: 'O mnie' },
@@ -23,6 +24,10 @@ const items =
         { href: '/en/poetry/', text: 'Poetry' },
       ];
 
+const items = WORK_MODE ? allItems.filter((i) => i.href.endsWith('/publications/')) : allItems;
+const home = lang === 'pl' ? '/' : '/en/';
+const brandHref = WORK_MODE ? `${home}publications/` : home;
+
 const current = Astro.url.pathname.replace(/\/?$/, '/');
 const isActive = (href: string) =>
   href === '/' || href === '/en/' ? current === href : current.startsWith(href);
@@ -33,7 +38,7 @@ const switchLabel = lang === 'pl' ? 'EN' : 'PL';
 
 <header class="navbar">
   <div class="navbar-inner">
-    <a class="brand" href={lang === 'pl' ? '/' : '/en/'}>Kajetan Ciunelis</a>
+    <a class="brand" href={brandHref}>Kajetan Ciunelis</a>
     <div class="nav-tools">
       <a class="lang-switch" href={switchTarget}>{switchLabel}</a>
       <ThemeToggle />

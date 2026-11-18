@@ -48,7 +48,7 @@ Obrazy postów: `public/images/posts/<slug>/` → w treści `![alt](/images/post
 
 ## Design
 
-- Paleta: czerwień `#C41E3A`, krem `#F0EBE0`, czerń `#1A1A1A` (zmienne CSS w `global.css`)
+- Paleta: zieleń butelkowa `#155E3F` (jasna `#4CAF7D` w dark mode, czerwień wycofana), krem `#F0EBE0`, czerń `#1A1A1A` (zmienne CSS w `global.css`)
 - Font: Nunito (self-hosted przez `@fontsource-variable/nunito`)
 - Dark mode: klasa `dark` na `<html>`, localStorage `theme`, fallback do prefers-color-scheme
 - Brutalist: `border-radius: 0` wszędzie, bez cieni i gradientów
