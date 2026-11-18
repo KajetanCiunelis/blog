@@ -26,16 +26,29 @@ const allItems =
         { href: 'https://tnr.ciunelis.com/', text: 'TNR' },
       ];
 
-// TNR to link zewnętrzny do narzędzi na tnr.ciunelis.com
-const items = WORK_MODE
-  ? allItems.filter((i) => i.text === 'TNR' || i.href.endsWith('/publications/'))
-  : allItems;
-const home = lang === 'pl' ? '/' : '/en/';
-const brandHref = WORK_MODE ? `${home}publications/` : home;
+// Wersja do pracy: jedna strona, więc nawigacja prowadzi do jej sekcji.
+// Kotwice to identyfikatory nagłówków H2 z publications-pl/en.mdoc (zmiana nagłówka = zmiana kotwicy).
+const workItems =
+  lang === 'pl'
+    ? [
+        { href: '/#artykuły-w-czasopismach', text: 'Publikacje' },
+        { href: '/#projekty-badawcze', text: 'Projekty' },
+        { href: '/#konferencje', text: 'Konferencje' },
+        { href: 'https://tnr.ciunelis.com/', text: 'Dydaktyka ↗' },
+      ]
+    : [
+        { href: '/en/#journal-articles', text: 'Publications' },
+        { href: '/en/#research-projects', text: 'Projects' },
+        { href: '/en/#conference-presentations', text: 'Conferences' },
+        { href: 'https://tnr.ciunelis.com/', text: 'Teaching ↗' },
+      ];
+
+const items = WORK_MODE ? workItems : allItems;
+const brandHref = lang === 'pl' ? '/' : '/en/';
 
 const current = Astro.url.pathname.replace(/\/?$/, '/');
 const isActive = (href: string) =>
-  href === '/' || href === '/en/' ? current === href : current.startsWith(href);
+  !href.includes('#') && (href === '/' || href === '/en/' ? current === href : current.startsWith(href));
 
 const switchTarget = switchHref ?? (lang === 'pl' ? '/en/' : '/');
 const switchLabel = lang === 'pl' ? 'EN' : 'PL';
@@ -75,6 +88,13 @@ const switchLabel = lang === 'pl' ? 'EN' : 'PL';
     btn.addEventListener('click', function () {
       var open = links.classList.toggle('open');
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    // Linki do sekcji tej samej strony: zamknij menu mobilne po kliknięciu
+    links.addEventListener('click', function (e) {
+      if (e.target.closest('a')) {
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
     });
   })();
 </script>

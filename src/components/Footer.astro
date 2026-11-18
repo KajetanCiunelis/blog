@@ -1,4 +1,6 @@
 ---
+import { WORK_MODE } from '../config';
+
 interface Props {
   lang: 'pl' | 'en';
 }
@@ -14,8 +16,14 @@ const year = 2026;
     </div>
     <div class="footer-center">
       <p>
-        <a href="https://github.com/KajetanCiunelis" rel="me">GitHub</a> ·
-        <a href="https://www.instagram.com/kajetan.ciunelis/" rel="me">Instagram</a> ·
+        {
+          !WORK_MODE && (
+            <>
+              <a href="https://github.com/KajetanCiunelis" rel="me">GitHub</a> ·
+              <a href="https://www.instagram.com/kajetan.ciunelis/" rel="me">Instagram</a> ·
+            </>
+          )
+        }
         <a href="https://orcid.org/0009-0007-4168-9122" rel="me">ORCID</a> ·
         <a href="mailto:kajetan.ciunelis@awf.edu.pl">kajetan.ciunelis@awf.edu.pl</a>
       </p>

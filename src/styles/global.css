@@ -207,7 +207,7 @@ hr {
 }
 
 .navbar .nav-link:hover {
-  color: var(--green);
+  color: var(--green-bright);
 }
 
 .navbar .nav-link.active {
@@ -254,7 +254,7 @@ hr {
 }
 
 .theme-toggle:hover {
-  color: var(--green);
+  color: var(--green-bright);
 }
 
 .theme-toggle .icon-sun {
@@ -338,7 +338,7 @@ html.dark .theme-toggle .icon-moon {
 }
 
 .footer a:hover {
-  color: var(--green);
+  color: var(--green-bright);
 }
 
 .footer p {
@@ -725,8 +725,21 @@ html.dark .about-svg-dark {
   display: block;
 }
 
+.pub-lead {
+  margin: 0 0 1.75rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: left;
+  max-width: 44ch;
+}
+
 .pub-intro h2 {
   margin-top: 0;
+  font-size: 1.2rem;
+}
+
+h2[id] {
+  scroll-margin-top: 1.5rem;
 }
 
 .pub-intro .edu-entry:last-child {
