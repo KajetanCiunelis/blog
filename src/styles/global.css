@@ -713,17 +713,16 @@ html.dark .about-svg-dark {
 /* === Publikacje w wersji do pracy: portret + edukacja === */
 .pub-intro {
   display: flex;
-  align-items: flex-start;
-  gap: 2rem;
-  margin: 1.5rem 0 2.5rem;
+  align-items: center;
+  gap: 2.5rem;
+  margin: 1rem 0 2.5rem;
 }
 
 .pub-portrait {
   flex: 0 0 auto;
-  width: 200px;
-  height: 200px;
+  width: 320px;
+  height: 320px;
   display: block;
-  border: 1px solid var(--border);
 }
 
 .pub-intro h2 {
@@ -734,15 +733,17 @@ html.dark .about-svg-dark {
   margin-bottom: 0;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .pub-intro {
     flex-direction: column;
+    align-items: flex-start;
     gap: 1.25rem;
   }
 
   .pub-portrait {
-    width: 140px;
-    height: 140px;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
   }
 }
 
