@@ -1,4 +1,4 @@
-// Wersja "do pracy": zostają tylko Publikacje. Znikają linki w nawigacji,
+// Wersja "do pracy": zostają tylko Publikacje i TNR. Znikają linki w nawigacji,
 // strona "O mnie" (pod / i /en/ renderują się Publikacje) oraz stopka.
 // Blog i Poezja dalej istnieją pod swoimi adresami, są tylko niepodlinkowane.
 // Włączenie: PUBLIC_WORK_MODE=true przy buildzie (npm run build:work).
